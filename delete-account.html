@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delete Account — Kalma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:            #0e1f1a;
+      --surface:       #162820;
+      --border:        rgba(100,180,150,0.12);
+      --accent:        #6dbf9a;
+      --accent2:       #4a9e7c;
+      --danger:        #e07070;
+      --danger-bg:     rgba(224,112,112,0.07);
+      --danger-border: rgba(224,112,112,0.20);
+      --text:          #e8f0ec;
+      --muted:         #8ab09a;
+      --faint:         rgba(109,191,154,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(74,158,124,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(224,112,112,0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .spiral-bg {
+      position: fixed;
+      top: 50%;
+      right: -120px;
+      transform: translateY(-50%);
+      width: 480px;
+      height: 480px;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 80px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 52px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 5vw, 46px);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    h1 em { font-style: italic; color: var(--danger); }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    /* ── Warning banner ── */
+    .warning {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      border-left: 3px solid var(--danger);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      font-size: 14px;
+      color: #d4a0a0;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+
+    .warning strong { color: var(--danger); font-weight: 500; }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 48px;
+      animation: fadeUp 0.5s 0.15s ease both;
+    }
+
+    .section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Steps ── */
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--accent2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-num.danger {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .step-content h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .step-content p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .step-content code {
+      background: rgba(109,191,154,0.10);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 13px;
+      color: var(--accent);
+      font-family: monospace;
+    }
+
+    /* ── Data table ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      padding: 10px 16px;
+      background: var(--faint);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 14px 16px;
+      color: #c5d8cd;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .badge-deleted {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+    }
+
+    .badge-kept {
+      background: rgba(109,191,154,0.08);
+      border: 1px solid rgba(109,191,154,0.20);
+      color: var(--accent);
+    }
+
+    /* ── Email box ── */
+    .email-box {
+      background: var(--faint);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .email-box p { font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+    .email-box .note { font-size: 13px; color: #6a9080; margin-top: 12px; margin-bottom: 0; }
+
+    .email-box a.btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 32px;
+      border-radius: 100px;
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .email-box a.btn:hover { background: var(--danger); color: #0e1f1a; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      margin-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p { font-size: 13px; color: var(--muted); margin: 0; }
+    footer a { color: var(--accent); text-decoration: none; font-size: 13px; }
+
+    /* ── Confirmation Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.80);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease both;
+    }
+
+    .modal {
+      background: #162820;
+      border: 1px solid var(--danger-border);
+      border-top: 3px solid var(--danger);
+      border-radius: 20px;
+      padding: 36px 32px 28px;
+      max-width: 460px;
+      width: 100%;
+      animation: scaleIn 0.25s ease both;
+    }
+
+    .modal-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .modal > p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .modal-checklist {
+      list-style: none;
+      margin: 20px 0 16px;
+      background: rgba(224,112,112,0.05);
+      border: 1px solid var(--danger-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+
+    .modal-checklist li {
+      font-size: 14px;
+      color: #d4a0a0;
+      padding: 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-checklist li::before {
+      content: '✕';
+      color: var(--danger);
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .modal-final-warning {
+      font-size: 13px;
+      color: #c07878;
+      font-weight: 500;
+      margin-bottom: 28px;
+      padding: 12px 16px;
+      background: rgba(224,112,112,0.08);
+      border-radius: 8px;
+      border: 1px solid var(--danger-border);
+      text-align: center;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-cancel:hover { background: var(--faint); color: var(--text); }
+
+    .btn-confirm-delete {
+      flex: 1.4;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--danger);
+      background: var(--danger-bg);
+      color: var(--danger);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-confirm-delete:hover { background: var(--danger); color: #0e1f1a; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.93); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 480px) {
+      .modal { padding: 28px 20px 20px; }
+      .modal-actions { flex-direction: column-reverse; }
+    }
+
+    /* ── Sticky nav ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(14,31,26,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+
+    .site-nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo svg { width: 28px; height: 28px; }
+
+    .nav-logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links { display: flex; gap: 24px; }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+  </style>
+</head>
+<body>
+
+<!-- Sticky nav -->
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="5"  stroke="#6dbf9a" stroke-width="1.2" stroke-dasharray="2 2.5"/>
+        <circle cx="22" cy="22" r="10" stroke="#6dbf9a" stroke-width="1"   stroke-dasharray="2 3"  opacity="0.8"/>
+        <circle cx="22" cy="22" r="15" stroke="#6dbf9a" stroke-width="0.8" stroke-dasharray="2 4"  opacity="0.6"/>
+        <circle cx="22" cy="22" r="20" stroke="#6dbf9a" stroke-width="0.6" stroke-dasharray="2 5"  opacity="0.4"/>
+      </svg>
+      <span class="nav-logo-name">Kalma</span>
+    </a>
+    <div class="nav-links">
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms-of-service.html">Terms</a>
+      <a href="delete-account.html" class="active">Delete Account</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── Confirmation Modal ── -->
+<div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-icon">🗑️</div>
+    <h3 id="modalTitle">Delete everything?</h3>
+    <p>This will <strong style="color:var(--danger)">permanently and immediately</strong> delete the following from Kalma — there is no undo:</p>
+
+    <ul class="modal-checklist">
+      <li>Your name &amp; email address</li>
+      <li>Your full session history &amp; streak</li>
+      <li>All goal journey progress</li>
+      <li>Survey responses &amp; preferences</li>
+      <li>Your account login</li>
+    </ul>
+
+    <div class="modal-final-warning">
+      ⚠ Your data will be deleted immediately. It cannot be recovered.
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Keep my account</button>
+      <button class="btn-confirm-delete" onclick="confirmDelete()">Yes, delete everything</button>
+    </div>
+  </div>
+</div>
+
+<!-- Spiral BG -->
+<svg class="spiral-bg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="20"  stroke="white" stroke-width="1.5" stroke-dasharray="3 4"/>
+  <circle cx="100" cy="100" r="38"  stroke="white" stroke-width="1.2" stroke-dasharray="3 5"/>
+  <circle cx="100" cy="100" r="56"  stroke="white" stroke-width="1"   stroke-dasharray="2 5"/>
+  <circle cx="100" cy="100" r="74"  stroke="white" stroke-width="0.8" stroke-dasharray="2 6"/>
+  <circle cx="100" cy="100" r="92"  stroke="white" stroke-width="0.6" stroke-dasharray="2 7"/>
+</svg>
+
+<div class="container">
+
+  <header>
+    <div class="logo-wrap">
+      <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="5"  stroke="#6dbf9a" stroke-width="1.2" stroke-dasharray="2 2.5"/>
+        <circle cx="22" cy="22" r="10" stroke="#6dbf9a" stroke-width="1"   stroke-dasharray="2 3" opacity="0.8"/>
+        <circle cx="22" cy="22" r="15" stroke="#6dbf9a" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.6"/>
+        <circle cx="22" cy="22" r="20" stroke="#6dbf9a" stroke-width="0.6" stroke-dasharray="2 5" opacity="0.4"/>
+      </svg>
+      <span class="logo-name">Kalma</span>
+    </div>
+    <h1>Delete Your <em>Account</em></h1>
+    <p class="subtitle">You can permanently delete your Kalma account and all associated data at any time — directly in the app or by contacting us.</p>
+  </header>
+
+  <div class="warning">
+    <strong>⚠ This cannot be undone.</strong> Deleting your account removes all your data <strong>immediately and permanently.</strong> There is no grace period and no way to recover your account once deleted.
+  </div>
+
+  <!-- Steps -->
+  <div class="section">
+    <h2>How to delete your account in the app</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Open Kalma and sign in</h3>
+        <p>Make sure you are signed into the account you wish to delete.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Go to your Account</h3>
+        <p>Tap the profile icon in the top right corner of the home screen.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Open Settings</h3>
+        <p>Tap the <code>⚙ Settings</code> icon in the account screen.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Tap "Delete Account"</h3>
+        <p>Scroll to the bottom and tap <code>Delete Account</code>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num danger">5</div>
+      <div class="step-content">
+        <h3>Confirm in the popup</h3>
+        <p>A confirmation dialog lists everything that will be deleted. Tap <strong style="color:var(--danger)">"Yes, delete everything"</strong> to confirm. Your account and all data are deleted <strong>immediately.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data table -->
+  <div class="section">
+    <h2>What gets deleted</h2>
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>Data Type</th>
+        <th>Status</th>
+        <th>When</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Name &amp; email address</td>
+        <td><span class="badge badge-deleted">Deleted</span></td>
+        <td>Immediately</td>
+      </tr>
+      <tr>
+        <td>Session history &amp; streak</td>
+        <td><span class="badge badge-deleted">Deleted</span></td>
+        <td>Immediately</td>
+      </tr>
+      <tr>
+        <td>Goal journey progress</td>
+        <td><span class="badge badge-deleted">Deleted</span></td>
+        <td>Immediately</td>
+      </tr>
+      <tr>
+        <td>Survey responses</td>
+        <td><span class="badge badge-deleted">Deleted</span></td>
+        <td>Immediately</td>
+      </tr>
+      <tr>
+        <td>App preferences &amp; settings</td>
+        <td><span class="badge badge-deleted">Deleted</span></td>
+        <td>Immediately</td>
+      </tr>
+      <tr>
+        <td>Account login (Firebase Auth)</td>
+        <td><span class="badge badge-deleted">Deleted</span></td>
+        <td>Immediately</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Email fallback -->
+  <div class="section">
+    <h2>Can't access the app?</h2>
+    <div class="email-box" id="emailBox">
+      <p>If you're unable to sign in or access the app, you can request immediate account deletion by emailing us. Please include the email address associated with your Kalma account.</p>
+      <a class="btn" href="mailto:hello@kalma.app">Email us to delete account</a>
+      <p class="note">We will process your request immediately and confirm by email once done.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Kalma. All rights reserved.</p>
+    <div style="display:flex;gap:20px;">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-service.html">Terms of Service</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('confirmModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('confirmModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function confirmDelete() {
+    closeModal();
+    const box = document.getElementById('emailBox');
+    box.style.borderColor = 'var(--accent2)';
+    box.innerHTML = `
+      <p style="color:var(--accent);font-size:16px;font-weight:500;margin-bottom:10px;">✓ Request noted</p>
+      <p>To complete deletion, please email us at <a href="mailto:hello@kalma.app" style="color:var(--accent);text-decoration:underline">hello@kalma.app</a> with your registered email address and we will delete your account immediately.</p>
+      <p class="note" style="margin-top:16px;">💡 The fastest way to delete is directly inside the <strong style="color:var(--text)">Kalma app</strong> under Settings → Delete Account.</p>
+    `;
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Close on o

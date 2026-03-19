@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms of Service — Kalma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0e1f1a;
+      --surface:   #162820;
+      --border:    rgba(100,180,150,0.12);
+      --accent:    #6dbf9a;
+      --accent2:   #4a9e7c;
+      --text:      #e8f0ec;
+      --muted:     #8ab09a;
+      --faint:     rgba(109,191,154,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(74,158,124,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 90% 80%, rgba(109,191,154,0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .spiral-bg {
+      position: fixed;
+      top: 50%;
+      left: -120px;
+      transform: translateY(-50%);
+      width: 480px;
+      height: 480px;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Sticky nav ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(14,31,26,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+
+    .site-nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo svg { width: 28px; height: 28px; }
+
+    .nav-logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--accent); }
+
+    header {
+      padding: 52px 0 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 6vw, 50px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    h1 em { font-style: italic; color: var(--accent); }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .toc {
+      background: var(--faint);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 48px;
+    }
+
+    .toc-title {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+
+    @media (max-width: 520px) { .toc ol { grid-template-columns: 1fr; } }
+
+    .toc li { counter-increment: toc; }
+
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-size: 11px;
+      color: var(--accent2);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .toc a:hover { color: var(--text); }
+
+    section {
+      margin-bottom: 52px;
+      scroll-margin-top: 72px;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2 .num {
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    p {
+      font-size: 15px;
+      color: #c5d8cd;
+      margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      margin: 12px 0 16px;
+    }
+
+    ul li {
+      font-size: 15px;
+      color: #c5d8cd;
+      padding: 6px 0 6px 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .card {
+      background: var(--faint);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .card strong { color: var(--text); font-weight: 500; }
+
+    .contact-box {
+      background: var(--faint);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .contact-box p { font-size: 14px; }
+
+    .contact-box a {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 28px;
+      border-radius: 100px;
+      border: 1px solid var(--accent2);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .contact-box a:hover {
+      background: var(--accent2);
+      color: #0e1f1a;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      margin-top: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p { font-size: 13px; color: var(--muted); margin: 0; }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header, .toc, section {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .toc { animation-delay: 0.1s; }
+    section:nth-child(1) { animation-delay: 0.15s; }
+    section:nth-child(2) { animation-delay: 0.20s; }
+    section:nth-child(3) { animation-delay: 0.25s; }
+  </style>
+</head>
+<body>
+
+<svg class="spiral-bg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="20"  stroke="white" stroke-width="1.5" stroke-dasharray="3 4"/>
+  <circle cx="100" cy="100" r="38"  stroke="white" stroke-width="1.2" stroke-dasharray="3 5"/>
+  <circle cx="100" cy="100" r="56"  stroke="white" stroke-width="1"   stroke-dasharray="2 5"/>
+  <circle cx="100" cy="100" r="74"  stroke="white" stroke-width="0.8" stroke-dasharray="2 6"/>
+  <circle cx="100" cy="100" r="92"  stroke="white" stroke-width="0.6" stroke-dasharray="2 7"/>
+</svg>
+
+<!-- Sticky nav -->
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="5"  stroke="#6dbf9a" stroke-width="1.2" stroke-dasharray="2 2.5"/>
+        <circle cx="22" cy="22" r="10" stroke="#6dbf9a" stroke-width="1"   stroke-dasharray="2 3"  opacity="0.8"/>
+        <circle cx="22" cy="22" r="15" stroke="#6dbf9a" stroke-width="0.8" stroke-dasharray="2 4"  opacity="0.6"/>
+        <circle cx="22" cy="22" r="20" stroke="#6dbf9a" stroke-width="0.6" stroke-dasharray="2 5"  opacity="0.4"/>
+      </svg>
+      <span class="nav-logo-name">Kalma</span>
+    </a>
+    <div class="nav-links">
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms-of-service.html" class="active">Terms</a>
+      <a href="delete-account.html">Delete Account</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header>
+    <h1>Terms of <em>Service</em></h1>
+    <p class="meta">Effective — March 2026</p>
+  </header>
+
+  <nav class="toc" aria-label="Table of contents">
+    <p class="toc-title">Contents</p>
+    <ol>
+      <li><a href="#acceptance">Acceptance of Terms</a></li>
+      <li><a href="#eligibility">Eligibility</a></li>
+      <li><a href="#account">Your Account</a></li>
+      <li><a href="#subscriptions">Subscriptions &amp; Billing</a></li>
+      <li><a href="#use">Acceptable Use</a></li>
+      <li><a href="#content">Content &amp; IP</a></li>
+      <li><a href="#disclaimers">Disclaimers</a></li>
+      <li><a href="#limitation">Limitation of Liability</a></li>
+      <li><a href="#termination">Termination</a></li>
+      <li><a href="#changes">Changes to Terms</a></li>
+      <li><a href="#governing">Governing Law</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </nav>
+
+  <div class="card">
+    <strong>Plain English summary:</strong> Use Kalma for your own personal wellness. Don't abuse the service. Subscriptions auto-renew and can be cancelled anytime in Google Play. We're not a medical provider — Kalma is a wellness tool, not a substitute for professional care.
+  </div>
+
+  <!-- 1 -->
+  <section id="acceptance">
+    <h2><span class="num">01</span> Acceptance of Terms</h2>
+    <p>By downloading, installing, or using the Kalma app ("Kalma", "the Service", "we", "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, please do not use the Service.</p>
+    <p>These Terms apply to all users of Kalma, including guests, registered users, and premium subscribers.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="eligibility">
+    <h2><span class="num">02</span> Eligibility</h2>
+    <p>You must be at least <strong>18 years old</strong> to create an account or purchase a subscription. By using Kalma, you confirm that you meet this requirement.</p>
+    <p>If you are using Kalma on behalf of an organisation, you confirm you have authority to bind that organisation to these Terms.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="account">
+    <h2><span class="num">03</span> Your Account</h2>
+    <p>You are responsible for maintaining the confidentiality of your account credentials. You agree to:</p>
+    <ul>
+      <li>Provide accurate information when creating your account</li>
+      <li>Keep your password secure and not share it with others</li>
+      <li>Notify us immediately of any unauthorised use of your account</li>
+      <li>Not create multiple accounts to circumvent access restrictions or bans</li>
+    </ul>
+    <p>We reserve the right to suspend or terminate accounts that violate these Terms.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="subscriptions">
+    <h2><span class="num">04</span> Subscriptions &amp; Billing</h2>
+    <p>Kalma Premium is available as a monthly or annual subscription purchased through the Google Play Store. By subscribing, you agree to the following:</p>
+    <ul>
+      <li><strong>Auto-renewal:</strong> Subscriptions automatically renew at the end of each billing period unless cancelled at least 24 hours before renewal</li>
+      <li><strong>Billing:</strong> Payment is charged to your Google Play account at confirmation of purchase</li>
+      <li><strong>Cancellation:</strong> You may cancel at any time through your Google Play account settings. Access to premium features continues until the end of the current billing period</li>
+      <li><strong>Refunds:</strong> Refund requests are handled by Google Play in accordance with their refund policy</li>
+      <li><strong>Price changes:</strong> We may change subscription prices at any time. Price changes take effect at the next renewal and will be communicated to you in advance</li>
+    </ul>
+    <div class="card">
+      <strong>Free tier:</strong> Guest users and registered basic users may access Kalma without a subscription, subject to content and feature restrictions described in the app.
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="use">
+    <h2><span class="num">05</span> Acceptable Use</h2>
+    <p>You agree to use Kalma only for lawful, personal, non-commercial purposes. You must not:</p>
+    <ul>
+      <li>Reverse engineer, decompile, or attempt to extract source code from the app</li>
+      <li>Use the Service to distribute malware, spam, or harmful content</li>
+      <li>Attempt to gain unauthorised access to other users' accounts or our systems</li>
+      <li>Use automated scripts or bots to access the Service</li>
+      <li>Reproduce, resell, or distribute any part of the Service without written permission</li>
+      <li>Use the Service in any way that could damage, disable, or impair our infrastructure</li>
+    </ul>
+    <p>We reserve the right to suspend or terminate access for any violation of these rules without prior notice.</p>
+  </section>
+
+  <!-- 6 -->
+  <section id="content">
+    <h2><span class="num">06</span> Content &amp; Intellectual Property</h2>
+    <p>All content within Kalma — including but not limited to audio recordings, guided sessions, visualisations, journey content, app design, and text — is owned by or licensed to Kalma and protected by copyright law.</p>
+    <p>You may not copy, reproduce, distribute, or create derivative works from any Kalma content without our explicit written permission.</p>
+    <p>You retain ownership of any personal data you provide (such as your name and email). By using the Service, you grant us the right to use this data as described in our <a href="privacy-policy.html" style="color:var(--accent);text-decoration:underline;">Privacy Policy</a>.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="disclaimers">
+    <h2><span class="num">07</span> Disclaimers</h2>
+    <p>Kalma is a wellness and mindfulness tool. It is <strong>not a medical device</strong>, and it does not provide medical advice, diagnosis, or treatment.</p>
+    <p>The content in Kalma — including breathing exercises, soundscapes, and guided sessions — is intended for general wellness and stress reduction purposes only. It is not a substitute for professional medical or mental health care.</p>
+    <div class="card">
+      <strong>Important:</strong> If you are experiencing a mental health crisis or medical emergency, please contact a qualified healthcare professional or emergency services immediately.
+    </div>
+    <p>The Service is provided "as is" and "as available" without warranties of any kind, express or implied. We do not warrant that the Service will be uninterrupted, error-free, or free of viruses or other harmful components.</p>
+  </section>
+
+  <!-- 8 -->
+  <section id="limitation">
+    <h2><span class="num">08</span> Limitation of Liability</h2>
+    <p>To the fullest extent permitted by applicable law, Kalma and its operators shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or goodwill, arising from your use of or inability to use the Service.</p>
+    <p>Our total liability to you for any claim arising from these Terms or your use of the Service shall not exceed the amount you paid us in the 12 months preceding the claim.</p>
+    <p>Some jurisdictions do not allow limitations on implied warranties or exclusion of certain damages, so some of the above may not apply to you.</p>
+  </section>
+
+  <!-- 9 -->
+  <section id="termination">
+    <h2><span class="num">09</span> Termination</h2>
+    <p>You may stop using Kalma at any time and delete your account through the app settings. On account deletion, all your personal data will be removed from our servers within 30 days.</p>
+    <p>We may suspend or terminate your access to Kalma at any time, with or without notice, if we determine you have violated these Terms or if continued access would be harmful to other users or to us.</p>
+    <p>On termination, your right to use the Service ceases immediately. Sections that by their nature should survive termination (including Sections 6, 7, 8, and 11) will continue to apply.</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="changes">
+    <h2><span class="num">10</span> Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. When we make material changes, we will update the "Effective" date at the top of this page and, where appropriate, notify you within the app.</p>
+    <p>Continued use of Kalma after changes take effect constitutes your acceptance of the revised Terms.</p>
+  </section>
+
+  <!-- 11 -->
+  <section id="governing">
+    <h2><span class="num">11</span> Governing Law</h2>
+    <p>These Terms are governed by and construed in accordance with applicable law. Any disputes arising from these Terms or your use of Kalma will be subject to the exclusive jurisdiction of the relevant courts.</p>
+    <p>If any provision of these Terms is found to be unenforceable, the remaining provisions will continue in full force and effect.</p>
+  </section>
+
+  <!-- 12 -->
+  <section id="contact">
+    <h2><span class="num">12</span> Contact Us</h2>
+    <div class="contact-box">
+      <p>Questions about these Terms? We're happy to help.</p>
+      <a href="/cdn-cgi/l/email-protection#0169646d6d6e416a606d6c602f607171"><span class="__cf_email__" data-cfemail="3b535e5757547b505a57565a155a4b4b">[email&#160;protected]</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Kalma. All rights reserved.</p>
+    <div style="display:flex;gap:20px;">
+      <a

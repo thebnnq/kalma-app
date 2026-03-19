@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — Kalma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0e1f1a;
+      --surface:   #162820;
+      --border:    rgba(100,180,150,0.12);
+      --accent:    #6dbf9a;
+      --accent2:   #4a9e7c;
+      --text:      #e8f0ec;
+      --muted:     #8ab09a;
+      --faint:     rgba(109,191,154,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(74,158,124,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(109,191,154,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .spiral-bg {
+      position: fixed;
+      top: 50%;
+      right: -120px;
+      transform: translateY(-50%);
+      width: 480px;
+      height: 480px;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Nav bar ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(14,31,26,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+
+    .site-nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo svg { width: 28px; height: 28px; }
+
+    .nav-logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--accent); }
+
+    header {
+      padding: 52px 0 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 6vw, 50px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    h1 em { font-style: italic; color: var(--accent); }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .toc {
+      background: var(--faint);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 48px;
+    }
+
+    .toc-title {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+
+    @media (max-width: 520px) { .toc ol { grid-template-columns: 1fr; } }
+
+    .toc li { counter-increment: toc; }
+
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-size: 11px;
+      color: var(--accent2);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .toc a:hover { color: var(--text); }
+
+    section {
+      margin-bottom: 52px;
+      scroll-margin-top: 72px;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2 .num {
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    p {
+      font-size: 15px;
+      color: #c5d8cd;
+      margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      margin: 12px 0 16px;
+    }
+
+    ul li {
+      font-size: 15px;
+      color: #c5d8cd;
+      padding: 6px 0 6px 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .card {
+      background: var(--faint);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .card strong { color: var(--text); font-weight: 500; }
+
+    .contact-box {
+      background: var(--faint);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .contact-box p { font-size: 14px; }
+
+    .contact-box a {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 28px;
+      border-radius: 100px;
+      border: 1px solid var(--accent2);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .contact-box a:hover {
+      background: var(--accent2);
+      color: #0e1f1a;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      margin-top: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p { font-size: 13px; color: var(--muted); margin: 0; }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header, .toc, section {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .toc { animation-delay: 0.1s; }
+    section:nth-child(1) { animation-delay: 0.15s; }
+    section:nth-child(2) { animation-delay: 0.20s; }
+    section:nth-child(3) { animation-delay: 0.25s; }
+  </style>
+</head>
+<body>
+
+<svg class="spiral-bg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="20"  stroke="white" stroke-width="1.5" stroke-dasharray="3 4"/>
+  <circle cx="100" cy="100" r="38"  stroke="white" stroke-width="1.2" stroke-dasharray="3 5"/>
+  <circle cx="100" cy="100" r="56"  stroke="white" stroke-width="1"   stroke-dasharray="2 5"/>
+  <circle cx="100" cy="100" r="74"  stroke="white" stroke-width="0.8" stroke-dasharray="2 6"/>
+  <circle cx="100" cy="100" r="92"  stroke="white" stroke-width="0.6" stroke-dasharray="2 7"/>
+</svg>
+
+<!-- Sticky nav -->
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="5"  stroke="#6dbf9a" stroke-width="1.2" stroke-dasharray="2 2.5"/>
+        <circle cx="22" cy="22" r="10" stroke="#6dbf9a" stroke-width="1"   stroke-dasharray="2 3"  opacity="0.8"/>
+        <circle cx="22" cy="22" r="15" stroke="#6dbf9a" stroke-width="0.8" stroke-dasharray="2 4"  opacity="0.6"/>
+        <circle cx="22" cy="22" r="20" stroke="#6dbf9a" stroke-width="0.6" stroke-dasharray="2 5"  opacity="0.4"/>
+      </svg>
+      <span class="nav-logo-name">Kalma</span>
+    </a>
+    <div class="nav-links">
+      <a href="privacy-policy.html" class="active">Privacy</a>
+      <a href="terms-of-service.html">Terms</a>
+      <a href="delete-account.html">Delete Account</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header>
+    <h1>Privacy <em>Policy</em></h1>
+    <p class="meta">Last updated — March 2026</p>
+  </header>
+
+  <nav class="toc" aria-label="Table of contents">
+    <p class="toc-title">Contents</p>
+    <ol>
+      <li><a href="#information">Information We Collect</a></li>
+      <li><a href="#use">How We Use It</a></li>
+      <li><a href="#storage">Data Storage</a></li>
+      <li><a href="#sharing">Data Sharing</a></li>
+      <li><a href="#rights">Your Rights</a></li>
+      <li><a href="#children">Children</a></li>
+      <li><a href="#changes">Policy Changes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </nav>
+
+  <div class="card">
+    <strong>In plain English:</strong> Kalma collects only what's needed to run the app — your email, name, and usage data like streaks and goal progress. We don't sell your data. Ever.
+  </div>
+
+  <section id="information">
+    <h2><span class="num">01</span> Information We Collect</h2>
+    <p>When you create an account or use Kalma, we may collect the following:</p>
+    <ul>
+      <li><strong>Account information</strong> — your name and email address when you sign up</li>
+      <li><strong>Usage data</strong> — daily session completions, streaks, and goal journey progress</li>
+      <li><strong>App preferences</strong> — session duration, reminder settings, and theme (morning/night)</li>
+      <li><strong>Survey responses</strong> — optional answers provided during goal setup and completion</li>
+      <li><strong>Device information</strong> — basic technical data (OS version, device type) used for crash reporting and compatibility</li>
+      <li><strong>Crash and diagnostic data</strong> — anonymous crash reports collected via Firebase Crashlytics to help us fix bugs and improve stability</li>
+    </ul>
+    <p>If you use Kalma as a guest, no personal information is collected. Data is stored locally on your device only.</p>
+  </section>
+
+  <section id="use">
+    <h2><span class="num">02</span> How We Use Your Information</h2>
+    <p>We use your information to:</p>
+    <ul>
+      <li>Provide and personalise your Kalma experience</li>
+      <li>Sync your progress and streak across devices</li>
+      <li>Send optional reminder notifications (only if you enable them)</li>
+      <li>Diagnose crashes and improve app stability via Crashlytics</li>
+      <li>Improve app features and fix issues</li>
+      <li>Respond to support requests</li>
+    </ul>
+    <p>We do not use your data for advertising, and we do not build advertising profiles.</p>
+  </section>
+
+  <section id="storage">
+    <h2><span class="num">03</span> Data Storage &amp; Security</h2>
+    <p>Your data is stored using <strong>Google Firebase</strong> (Firestore and Firebase Authentication), which provides industry-standard encryption both in transit and at rest.</p>
+    <p>Crash reports and diagnostic data are collected by <strong>Firebase Crashlytics</strong>, a Google service. Crashlytics data is anonymised and does not include your name or email address.</p>
+    <p>Local data (for guest users or offline use) is stored on your device using SharedPreferences and is not transmitted to any server.</p>
+    <div class="card">
+      <strong>Data location:</strong> Firebase services are operated by Google LLC and data may be stored on servers located in the United States or other countries where Google operates infrastructure.
+    </div>
+  </section>
+
+  <section id="sharing">
+    <h2><span class="num">04</span> Data Sharing</h2>
+    <p>We do not sell, trade, or rent your personal information to third parties.</p>
+    <p>We share data only with:</p>
+    <ul>
+      <li><strong>Google Firebase</strong> — for authentication, database, and crash reporting</li>
+      <li><strong>Google Play</strong> — for processing subscription purchases and verifying entitlements</li>
+      <li><strong>Law enforcement</strong> — only if required by applicable law</li>
+    </ul>
+    <p>No other third parties receive your personal data.</p>
+  </section>
+
+  <section id="rights">
+    <h2><span class="num">05</span> Your Rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+      <li><strong>Access</strong> — request a copy of the data we hold about you</li>
+      <li><strong>Correction</strong> — update your name or email in the app settings</li>
+      <li><strong>Deletion</strong> — request that we delete your account and all associated data</li>
+      <li><strong>Portability</strong> — request your data in a readable format</li>
+      <li><strong>Opt out of crash reporting</strong> — contact us to disable Crashlytics data collection for your account</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at the email below. We will respond within 30 days.</p>
+    <p>Signing out of the app clears all locally cached personal data from your device immediately.</p>
+  </section>
+
+  <section id="children">
+    <h2><span class="num">06</span> Children's Privacy</h2>
+    <p>Kalma is intended for users aged <strong>18 and older</strong>. We do not knowingly collect personal information from anyone under 18.</p>
+    <p>If you believe a child has provided us with personal information, please contact us immediately and we will delete it promptly.</p>
+  </section>
+
+  <section id="changes">
+    <h2><span class="num">07</span> Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page.</p>
+    <p>Continued use of Kalma after any changes constitutes your acceptance of the updated policy. We encourage you to review this page periodically.</p>
+  </section>
+
+  <section id="contact">
+    <h2><span class="num">08</span> Contact Us</h2>
+    <div class="contact-box">
+      <p>If you have any questions about this Privacy Policy or how we handle your data, we'd love to hear from you.</p>
+      <a href="mailto:hello@kalma.app">hello@kalma.app</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Kalma. All rights reserved.</p>
+    <div style="display:flex;gap:20px;">
+      <a
